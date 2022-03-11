@@ -18,10 +18,13 @@ def get_column_names():
 
     return(names_list)
 
-if __name__ == '__main__':
-
+def get_data():
+    
     names_list = get_column_names()
 
     df_data = pd.read_csv(r'../data/onehr.data', names = names_list, index_col=False)
 
-    print(df_data['ozone_day'].value_counts())
+    return(df_data)
+
+if __name__ == '__main__':
+    get_data()

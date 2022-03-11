@@ -2,9 +2,10 @@ FROM python:3.9
 
 RUN groupadd -r uwsgi && useradd -r -g uwsgi uwsgi
 
-RUN pip install Flask==2.0.1 uWSGI==2.0.20
+RUN pip install Flask==2.0.1 uWSGI==2.0.20 pandas==1.4.1 
 WORKDIR /app
 COPY app /app
+COPY data /data
 
 EXPOSE 9090 9191
 USER uwsgi
