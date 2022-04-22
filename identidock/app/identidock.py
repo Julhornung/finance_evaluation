@@ -2,13 +2,18 @@ from flask import Flask, request, render_template, session, redirect
 
 from data_processing import get_data
 
+import plotly.express as px
+import os
+
 app = Flask(__name__)
 
-# df = get_data()
+df = get_data()
 
-# print(df.head())
+fig = px.line(df,
+        x = 'Date',
+        y = 'WSR0')
 
-
+fig.write_html('static/plotly_graph.html')
 
 # @app.route('/', methods=("POST", "GET"))
 # def html_table():
@@ -17,10 +22,9 @@ app = Flask(__name__)
 
 
 @app.route('/')
-def hello_world():
-      
+
+def home():
   return render_template('main.html')
-  # return 'Hello Docker!\n'
 
 if __name__ == '__main__':
 
