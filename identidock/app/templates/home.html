@@ -1,0 +1,50 @@
+{% extends "base.html"%}
+
+{% block title %}
+
+Data Dashboard Home
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="row">
+    <div class="col-1">
+        <a href="https://www.linkedin.com/in/julhornung/">
+          <img src= {{ url_for('static', filename= 'linkedin_logo.png')}} alt="linkedin", width="50" height="50">
+        </a>
+    </div>
+
+<div class="row">
+    <div class="col-1">
+        <a href="https://github.com/Julhornung">
+          <img src= {{ url_for('static', filename= 'github.png')}} alt="github", width="50" height="50">
+        </a>
+    </div>
+
+    <div class="col-11">
+        <div class="row">
+            <div class="col-6">
+                <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src={{ url_for('static', filename= 'plotly_graph.html')}} height="525" width="100%"></iframe>
+            </div>
+
+            <div class="col-6">
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+
+            <div class="col-6">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %} 

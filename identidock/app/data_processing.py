@@ -24,6 +24,11 @@ def get_data():
 
     df_data = pd.read_csv(r'../data/onehr.data', names = names_list, index_col=False)
 
+    df_data['Date'] = pd.to_datetime(df_data['Date'])
+    df_data['WSR0'] = pd.to_numeric(df_data['WSR0'], errors = 'coerce')
+
+    # print(df_data.dtypes)
+
     return(df_data)
 
 if __name__ == '__main__':
