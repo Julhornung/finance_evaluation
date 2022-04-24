@@ -22,10 +22,20 @@ def get_data():
     
     names_list = get_column_names()
 
-    df_data = pd.read_csv(r'../data/onehr.data', names = names_list, index_col=False)
+    df_data = pd.read_csv(r'../data/onehr.data',
+                            names = names_list,
+                            index_col=False,
+                            )
 
     df_data['Date'] = pd.to_datetime(df_data['Date'])
-    df_data['WSR0'] = pd.to_numeric(df_data['WSR0'], errors = 'coerce')
+
+    # cols = df_data.columns.values()
+    
+    names_list.remove('Date')
+
+    for col in names_list:
+
+        df_data[col] = pd.to_numeric(df_data[col], errors = 'coerce')
 
     # print(df_data.dtypes)
 
