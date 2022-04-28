@@ -43,7 +43,7 @@ def home():
   
   
   cols_list = list(df.columns)
-  # print(cols_list)
+  print(cols_list)
 
   if request.method == "POST":
     x_axes = request.form["x_axes"]
@@ -52,7 +52,7 @@ def home():
     return render_template('home.html',
                           dropdown_list = cols_list,
                           plot_json = plotly_global_timeseries(df, x_axes, y_axes))
-
+  
   else:
     
     return render_template('home.html', dropdown_list = cols_list)#, plot_json = plot_json)
