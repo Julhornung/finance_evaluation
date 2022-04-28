@@ -17,11 +17,11 @@ df = get_data()
 
 # fig.write_html('static/plotly_graph.html')
 
-def plotly_global_timeseries(df):
+def plotly_global_timeseries(df, x_axes, y_axes):
 
   fig = px.line(df,
-          x = 'Date',
-          y = 'WSR0')
+          x = x_axes,
+          y = y_axes)
 
   # fig = fig.update_xaxes(rangeslider_visible=True)
 
@@ -37,13 +37,25 @@ def plotly_global_timeseries(df):
 #     return render_template('simple.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
 
 
-@app.route('/')
+@app.route('/', methods = ["POST", "GET"])
 
 def home():
-      
-  plot_json = plotly_global_timeseries(df)
+  
+  
+  cols_list = list(df.columns)
+  # print(cols_list)
 
-  return render_template('home.html', plot_json = plot_json)
+  if request.method == "POST":
+    x_axes = request.form["x_axes"]
+    y_axes = request.form["y_axes"]
+
+    return render_template('home.html',
+                          dropdown_list = cols_list,
+                          plot_json = plotly_global_timeseries(df, x_axes, y_axes))
+
+  else:
+    
+    return render_template('home.html', dropdown_list = cols_list)#, plot_json = plot_json)
 
 if __name__ == '__main__':
 
