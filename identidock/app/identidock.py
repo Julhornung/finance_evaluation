@@ -17,11 +17,18 @@ df = get_data()
 
 # fig.write_html('static/plotly_graph.html')
 
-def plotly_global_timeseries(df, x_axes, y_axes):
+def plotly_global_timeseries(df, x_axes, y_axes, plot_type):
 
-  fig = px.line(df,
-          x = x_axes,
-          y = y_axes)
+  if plot_type == 'line':
+        
+    fig = px.line(df,
+            x = x_axes,
+            y = y_axes)
+  
+  else:
+    fig = px.scatter(df,
+            x = x_axes,
+            y = y_axes)    
 
   # fig = fig.update_xaxes(rangeslider_visible=True)
 
@@ -31,31 +38,38 @@ def plotly_global_timeseries(df, x_axes, y_axes):
 
   return (plot_json)
 
+
 # @app.route('/', methods=("POST", "GET"))
 # def html_table():
 
 #     return render_template('simple.html',  tables=[df.to_html(classes='data')], titles=df.columns.values)
 
+@app.route('/', methods = ["GET"])
 
-@app.route('/', methods = ["POST", "GET"])
+def Home():
+      
+  return render_template('home.html')
 
-def home():
-  
-  
+
+@app.route('/Plots', methods = ["POST", "GET"])
+
+def Plots():
+
   cols_list = list(df.columns)
   print(cols_list)
 
   if request.method == "POST":
+    plot_type = request.form["plot_type"]
     x_axes = request.form["x_axes"]
     y_axes = request.form["y_axes"]
 
-    return render_template('home.html',
+    return render_template('plots.html',
                           dropdown_list = cols_list,
-                          plot_json = plotly_global_timeseries(df, x_axes, y_axes))
+                          plot_json = plotly_global_timeseries(df, x_axes, y_axes, plot_type))
   
   else:
     
-    return render_template('home.html', dropdown_list = cols_list)#, plot_json = plot_json)
+    return render_template('plots.html', dropdown_list = cols_list)#, plot_json = plot_json)
 
 if __name__ == '__main__':
 

@@ -1,0 +1,86 @@
+{% extends "base.html"%}
+
+{% block title %}
+
+Data Dashboard Home
+
+{% endblock %} 
+
+{% block content %}
+
+<div class="row">
+    <div class="col-1">
+        <a href="https://www.linkedin.com/in/julhornung/">
+          <img src= {{ url_for('static', filename= 'linkedin_logo.png')}} alt="linkedin", width="50" height="50">
+        </a>
+    </div>
+
+<div class="row">
+    <div class="col-1">
+        <a href="https://github.com/Julhornung">
+          <img src= {{ url_for('static', filename= 'github.png')}} alt="github", width="50" height="50">
+        </a>
+    </div>
+
+    <div class="col-11">
+        <div class="row">
+            <div class="col-6">
+
+              <form action = "#" method = "post">
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name = "plot_type">
+                    <option value= "line" SELECTED>Line</option>"
+                    <option value= "scatter" >Scatter</option>"
+                  </select>
+                  <label for="floatingSelect">Type of Plot</label>
+                </div>
+
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name = "x_axes" value="Date">
+                    {% for col in dropdown_list %}
+                    <option value= "{{col}}">{{col}}</option>"
+                    {% endfor %}
+                  </select>
+                  <label for="floatingSelect">X-Axes</label>
+                </div>
+
+                <div class="form-floating">
+                  <select class="form-select" id="floatingSelect" aria-label="Floating label select example" name = "y_axes">
+                    {% for col in dropdown_list %}
+                    <option value= "{{col}}" SELECTED>{{col}}</option>"
+                    {% endfor %}
+                  </select>
+                  <label for="floatingSelect">Y-Axes</label>
+                </div>
+                <input type="submit" value="Submit">
+              </form>
+
+
+
+                  
+
+                <!-- <iframe id="igraph" scrolling="no" style="border:none;" seamless="seamless" src={{ url_for('static', filename= 'plotly_graph.html')}} height="525" width="100%"></iframe> -->
+                <div id="plotly-timeseries"></div>
+                    <script> var graph = {{ plot_json | safe }}; Plotly.plot('plotly-timeseries', graph, {}); </script>
+            </div>
+
+            <div class="col-6">
+
+            </div>
+
+        </div>
+
+        <div class="row">
+            <div class="col-6">
+
+            </div>
+
+            <div class="col-6">
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+{% endblock %} 
