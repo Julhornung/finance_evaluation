@@ -7,6 +7,10 @@ import plotly
 import os
 import json
 
+###### redirect 
+###### https://stackoverflow.com/questions/64176533/flask-why-does-not-the-html-submit-button-redirect-the-page-to-the-target-url
+###### https://code-maven.com/slides/python/flask-internal-redirect-parameters
+
 app = Flask(__name__)
 
 df = get_data()
@@ -56,17 +60,43 @@ def Home():
 def Plots():
 
   cols_list = list(df.columns)
-  print(cols_list)
+  #print(cols_list)
 
   if request.method == "POST":
     plot_type = request.form["plot_type"]
     x_axes = request.form["x_axes"]
     y_axes = request.form["y_axes"]
+    #plain_text = request.form["plain_text"]
+
+
+    #### redirect should be used here: redirect to Plots_2 handover variables 
+    return render_template('plots.html',
+                          dropdown_list = cols_list,
+                          plot_json = plotly_global_timeseries(df, x_axes, y_axes, plot_type),
+                          var = "True")
+
+  else:
+    
+    return render_template('plots.html', dropdown_list = cols_list)#, plot_json = plot_json)
+
+@app.route('/Plots_2', methods = ["POST", "GET"])
+
+def Plots_2():
+
+  cols_list = list(df.columns)
+  #print(cols_list)
+
+  if request.method == "POST":
+    plot_type = request.form["plot_type"]
+    x_axes = request.form["x_axes"]
+    y_axes = request.form["y_axes"]
+    #plain_text = request.form["plain_text"]
 
     return render_template('plots.html',
                           dropdown_list = cols_list,
-                          plot_json = plotly_global_timeseries(df, x_axes, y_axes, plot_type))
-  
+                          plot_json = plotly_global_timeseries(df, x_axes, y_axes, plot_type),
+                          var = "True")
+                          
   else:
     
     return render_template('plots.html', dropdown_list = cols_list)#, plot_json = plot_json)
